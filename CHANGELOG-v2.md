@@ -26,3 +26,14 @@
 
 ## v1（同日）
 - 初版：sidebar.panellist 图标 + main 主面板 + /api/monitor.snapshot 快照路由（1s 缓存）
+
+## v4（同日）：NAME 列 + 终止按钮
+- 服务表加 NAME 列：comm 无意义时（node→MainThread）从 args 路径推导（vite 可见）
+- 每行「终止」按钮：两击确认（终止 → 确认?，3s 自动复位），POST /api/monitor.kill 发 SIGTERM
+- Host 5 道护栏：pid 合法 / 拒杀自身 / 拒杀父链 / 同 uid / 服务表内 + args 回显防 pid 复用竞态
+- 成功后清快照缓存即时刷新；locale zh/en 同步
+
+## v5（同日）：滚动 + 处理中反馈
+- 右栏 tab 容器 overflow:hidden，页面根元素自设 height:100% + overflow-y:auto（修「超出看不到」）
+- 确认杀进程后整行变黄（warn-tertiary 底 + warn 名字）+ 按钮禁用显示「终止中…」
+- 15s 未退出 → 恢复按钮 + 提示「TERM 可能被忽略，可再次终止」；进程消失自动清理 pending
